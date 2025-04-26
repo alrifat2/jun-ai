@@ -1,0 +1,20 @@
+# Xcode
+DerivedData/
+*.xcworkspace
+*.xcuserdata
+*.xcodeproj/project.xcworkspace
+*.xcodeproj/xcuserdata
+*.crash
+*.xccrashpoint
+*.xcuserstate
+
+.DS_Store
+
+build/
+*.ipa
+*.dSYM.zip
+*.dSYM
+Packages/
+Package.resolved
+
+
