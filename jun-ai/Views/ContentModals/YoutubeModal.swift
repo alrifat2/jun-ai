@@ -13,21 +13,18 @@ struct YoutubeModal: View {
     @State private var isProcessing: Bool = false
     @State private var errorMessage: String? = nil
     
-    @StateObject var viewModal = YoutubeModalViewModel()
     @State private var url = ""
     
-    @Environment(\.modelContext) private var modelContext
+    @Environment(\.modelContext) private var modelContext    
+    private var youtubeViewModal: YoutubeModalViewModel {
+        YoutubeModalViewModel(modelContext: modelContext)
+    }
     
     var onProcess: (String) -> Void
     
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
-            // Header with title and close button
             HStack {
-                Text("YouTube Video")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                
                 Spacer()
                 
                 Button(action: {
@@ -39,15 +36,18 @@ struct YoutubeModal: View {
                 }
                 .buttonStyle(.plain)
             }
+
+            HStack {
+                Text("YouTube Video")
+                    .font(.title2)
+                    .fontWeight(.bold)            }
             
-            // Description
             Text("Extract from YouTube videos by providing a link. Jun AI will analyze the content and generate summaries, key points, and more.")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.leading)
                 .padding(.bottom, 8)
             
-            // URL input field
             VStack(alignment: .leading, spacing: 8) {
                 Text("Enter YouTube URL")
                     .font(.headline)
@@ -82,7 +82,6 @@ struct YoutubeModal: View {
                     }
                 }
             }
-            // Action buttons
             HStack {
                 Spacer()
                 
@@ -123,37 +122,22 @@ struct YoutubeModal: View {
             do {
                 let transcript = try await YoutubeTranscript.fetchTranscript(from: trimmedUrl)
                 let transcriptText = transcript.map { $0.text }.joined(separator: " ")
-//                for entry in transcript {
-//                    print("[\(entry.offset)s - \(entry.offset + entry.duration)s] \(entry.text)")
-//                }
                 
-                let settingService = SettingService(context: modelContext)
-                guard let apiKey = settingService.getApiKey(), !apiKey.isEmpty else {
-                    print("❌ No valid API key found.")
-                    return
+                let summary = await youtubeViewModal.getSummary(transcript: transcriptText)
+                if let summary = summary {
+                    let content = await youtubeViewModal.createContent(transcript: transcriptText, youtubeUrl: trimmedUrl, summary: summary)
+                    if content != nil {
+                        onProcess(trimmedUrl)
+                    }
                 }
-                
-                print(apiKey)
-                
-                do {
-                    let aiService = AIService(apiKey: apiKey)
-                    let summaryMarkdown = try await aiService.generateYoutubeSummary(transcript: transcriptText)
-                    print(summaryMarkdown)
-                } catch {
-                    print("❌ AI Summary Generation Failed:", error.localizedDescription)
-                }
-                
             } catch {
                 print("❌ Transcript fetch failed:", error.localizedDescription)
             }
-
+    
             isProcessing = false
-            onProcess(trimmedUrl)
             dismiss()
         }
     }
-    
-    
 }
 
 #Preview {

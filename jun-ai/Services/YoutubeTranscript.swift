@@ -1,4 +1,4 @@
-    //
+//
 //  YoutubeTranscript.swift
 //  jun-ai
 //
@@ -66,7 +66,22 @@ class YoutubeTranscript {
               let captions = parsed["captions"] as? [String: Any],
               let renderer = captions["playerCaptionsTracklistRenderer"] as? [String: Any],
               let tracks = renderer["captionTracks"] as? [[String: Any]],
-              let urlString = tracks.first?["baseUrl"] as? String,
+              !tracks.isEmpty
+        else {
+            throw YoutubeTranscriptError.transcriptNotAvailable
+        }
+        
+        let englishTrack = tracks.first { track in
+            if let languageCode = track["languageCode"] as? String,
+               languageCode.lowercased() == "en" {
+                return true
+            }
+            return false
+        }
+        
+        let selectedTrack = englishTrack ?? tracks.first
+        
+        guard let urlString = selectedTrack?["baseUrl"] as? String,
               let transcriptURL = URL(string: urlString)
         else {
             throw YoutubeTranscriptError.transcriptNotAvailable

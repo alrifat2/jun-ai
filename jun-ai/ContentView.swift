@@ -110,8 +110,7 @@ struct ContentView: View {
             case .settings:
                 SettingView()
             case .folder(let folder):
-                Text("Folder: \(folder.name)")
-                    .font(.title)
+                FolderView(folder: folder)
             default:
                 Text("Select an option")
                     .foregroundStyle(.secondary)

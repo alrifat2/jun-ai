@@ -6,13 +6,30 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B54551AE2DBF049C00B9DB1C /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = B54551AD2DBF049C00B9DB1C /* MarkdownUI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		B587ECEC2DBA051500B5D172 /* jun-ai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "jun-ai.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		B5F88CA92DC348A700EBDC2B /* Exceptions for "jun-ai" folder in "jun-ai" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = B587ECEB2DBA051500B5D172 /* jun-ai */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		B587ECEE2DBA051500B5D172 /* jun-ai */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				B5F88CA92DC348A700EBDC2B /* Exceptions for "jun-ai" folder in "jun-ai" target */,
+			);
 			path = "jun-ai";
 			sourceTree = "<group>";
 		};
@@ -23,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B54551AE2DBF049C00B9DB1C /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +83,7 @@
 			);
 			name = "jun-ai";
 			packageProductDependencies = (
+				B54551AD2DBF049C00B9DB1C /* MarkdownUI */,
 			);
 			productName = "jun-ai";
 			productReference = B587ECEC2DBA051500B5D172 /* jun-ai.app */;
@@ -94,6 +113,9 @@
 			);
 			mainGroup = B587ECE32DBA051400B5D172;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B54551AC2DBF049C00B9DB1C /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B587ECED2DBA051500B5D172 /* Products */;
 			projectDirPath = "";
@@ -319,6 +341,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B54551AC2DBF049C00B9DB1C /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B54551AD2DBF049C00B9DB1C /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B54551AC2DBF049C00B9DB1C /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B587ECE42DBA051400B5D172 /* Project object */;
 }
